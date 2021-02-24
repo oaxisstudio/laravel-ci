@@ -14,8 +14,8 @@ Parameters:
     Type: String
     Default: 172.18.7.0/24
   Ec2ImageId:
-#    Type: AWS::SSM::Parameter::Value<String>
-#    Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
+    #    Type: AWS::SSM::Parameter::Value<String>
+    #    Default: /aws/service/ami-amazon-linux-latest/amzn2-ami-hvm-x86_64-gp2
     Type: String
     Default: ami-0f310fced6141e627
   Ec2InstanceType:
@@ -23,7 +23,7 @@ Parameters:
     Default: t2.micro
   Ec2KeyName:
     Type: String
-    Default: laravel-ci-ec2-user
+    Default: handson
 
 Resources:
   VPC:
@@ -31,8 +31,7 @@ Resources:
     Properties:
       CidrBlock: !Ref VpcCidrBlock
       Tags:
-        -
-          Key: Name
+        - Key: Name
           Value: !Ref AWS::StackName
   PublicSubnet:
     Type: AWS::EC2::Subnet
@@ -81,7 +80,7 @@ Resources:
   AttachInternetGateway:
     Type: AWS::EC2::VPCGatewayAttachment
     Properties:
-      InternetGatewayId : !Ref InternetGateway
+      InternetGatewayId: !Ref InternetGateway
       VpcId: !Ref VPC
   RouteTableForPublicSubnet:
     Type: AWS::EC2::RouteTable
@@ -137,7 +136,7 @@ Resources:
           GroupSet:
             - !Ref SecurityGroupForPublicServer # Network interfaces and an instance-level security groups may not be specified on the same request
           AssociatePublicIpAddress: true
-          DeviceIndex : 0 # Property DeviceIndex cannot be empty.
+          DeviceIndex: 0 # Property DeviceIndex cannot be empty.
       Tags:
         - Key: Name
           Value: !Sub ${AWS::StackName}-ec2
